@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace P4_Projekt;
+namespace OfficeReservations;
 
 public partial class App : Application
 {

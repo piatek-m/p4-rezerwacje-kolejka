@@ -1,4 +1,4 @@
-﻿namespace P4_Projekt;
+﻿namespace OfficeReservations;
 
 public partial class AppShell : Shell
 {

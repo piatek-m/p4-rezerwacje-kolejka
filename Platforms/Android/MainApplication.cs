@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace P4_Projekt;
+namespace OfficeReservations;
 
 [Application]
 public class MainApplication : MauiApplication

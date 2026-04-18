@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace P4_Projekt;
+namespace OfficeReservations;
 
 public class Program
 {

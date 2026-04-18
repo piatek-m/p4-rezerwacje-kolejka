@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace P4_Projekt;
+namespace OfficeReservations;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

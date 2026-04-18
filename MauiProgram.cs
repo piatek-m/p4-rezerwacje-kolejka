@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace P4_Projekt;
+namespace OfficeReservations;
 
 public static class MauiProgram
 {
