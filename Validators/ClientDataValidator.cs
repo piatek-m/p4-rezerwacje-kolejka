@@ -5,19 +5,28 @@ namespace OfficeReservations.Validators;
 
 public class ClientDataValidator : AbstractValidator<ClientData>
 {
+    private const string NamePattern =
+        @"^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻáčďéěíňřšťúůýžÁČĎÉĚÍŇŘŠŤÚŮÝŽàâäéèêëîïôùûüÀÂÄÉÈÊËÎÏÔÙÛÜ\s\-']+$";
+
     public ClientDataValidator()
     {
         RuleFor(x => x.FirstName)
             .NotEmpty()
-            .WithMessage("Imię jest wymagane");
+            .WithMessage("Imię jest wymagane")
+            .Matches(NamePattern)
+            .WithMessage("Imię może zawierać tylko litery łacińskie"); ;
 
         RuleFor(x => x.LastName)
             .NotEmpty()
-            .WithMessage("Nazwisko jest wymagane");
+            .WithMessage("Nazwisko jest wymagane")
+            .Matches(NamePattern)
+            .WithMessage("Nazwisko może zawierać tylko litery łacińskie"); ;
 
         RuleFor(x => x.Pesel)
             .NotEmpty()
+            .WithMessage("PESEL jest wymagany")
             .Length(11)
+            .WithMessage("PESEL jest za krótki lub za długi")
             .Matches("^[0-9]{11}$")
             .WithMessage("PESEL musi składać się z 11 cyfr");
 

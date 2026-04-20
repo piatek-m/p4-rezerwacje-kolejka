@@ -41,7 +41,8 @@
                 <DataTemplate>
                     <Border Stroke="#bdc3c7"
                             StrokeThickness="1"
-                            Padding="8,6">
+                            Padding="8,6"
+                            HeightRequest="40">
                         <Label Text="{Binding ., StringFormat='{0:HH\\:mm}'}"
                                HorizontalOptions="Center"
                                FontSize="14"/>

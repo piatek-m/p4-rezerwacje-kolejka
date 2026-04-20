@@ -5,23 +5,29 @@ using OfficeReservations.Models;
 
 namespace OfficeReservations.ViewModels;
 
-public class SummaryViewModel : INotifyPropertyChanged
+public class SummaryViewModel : BaseViewModel
 {
-    public Reservation Reservation { get; }
+    // public Reservation Reservation { get; }
+
+    public Service? SelectedService { get; set; }
+    public DateTime? SelectedSlot { get; set; }
+
+    private ClientData _clientData = new();
+    public ClientData ClientData
+    {
+        get => _clientData;
+        set => SetProperty(ref _clientData, value);
+    }
+
     public ICommand ConfirmCommand { get; }
 
-    public SummaryViewModel(Reservation reservation)
+    public SummaryViewModel()
     {
-        Reservation = reservation;
         ConfirmCommand = new Command(OnConfirm);
     }
 
     private void OnConfirm()
     {
-
+        //potwierdzenie
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
