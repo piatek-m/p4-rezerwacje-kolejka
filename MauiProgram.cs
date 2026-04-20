@@ -18,10 +18,13 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
+		// AppShell
+		builder.Services.AddSingleton<AppShell>();
+
 		// Services
 		builder.Services.AddSingleton<DataService>();
 		builder.Services.AddSingleton<ReservationService>();
-		builder.Services.AddSingleton<>();
+		builder.Services.AddSingleton<QueueService>();
 
 		// ViewModels
 		builder.Services.AddTransient<ServiceSelectionViewModel>();

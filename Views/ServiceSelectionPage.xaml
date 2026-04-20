@@ -8,12 +8,8 @@
     <VerticalStackLayout Padding="20"
                          Spacing="16">
 
-        <Label Text="Wybierz usługę"
-               FontSize="24"
-               FontAttributes="Bold"/>
-
         <Label Text="Wybierz usługę z listy poniżej"
-               FontSize="14"
+               FontSize="18"
                TextColor="Gray"/>
 
         <!-- Grouped Services list -->
@@ -51,18 +47,13 @@
                                Text="{Binding Name}"
                                FontSize="14"
                                VerticalOptions="Center"/>
-                        <Label Grid.Column="1"
-                               Text="›"
-                               FontSize="18"
-                               TextColor="Gray"
-                               VerticalOptions="Center"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
         </CollectionView>
 
-        <Button Text="Dalej →"
+        <Button Text="Dalej"
                 Command="{Binding ProceedCommand}"
                 HorizontalOptions="Fill"
                 Margin="0,8,0,0"/>

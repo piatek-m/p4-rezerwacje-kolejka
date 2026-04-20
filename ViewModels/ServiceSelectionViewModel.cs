@@ -1,6 +1,9 @@
 using System.ComponentModel;
+using System.Linq;
 using OfficeReservations.Services;
 using OfficeReservations.Models;
+using OfficeReservations.Helpers;
+using OfficeReservations.Views;
 using System.Windows.Input;
 
 namespace OfficeReservations.ViewModels;
@@ -14,7 +17,11 @@ public class ServiceSelectionViewModel : BaseViewModel, INavigableViewModel
     public Service? SelectedService
     {
         get => _selectedService;
-        set => SetProperty(ref _selectedService, value);
+        set
+        {
+            SetProperty(ref _selectedService, value);
+            ((Command)ProceedCommand).ChangeCanExecute();
+        }
     }
 
     public ICommand ProceedCommand { get; }
@@ -22,14 +29,34 @@ public class ServiceSelectionViewModel : BaseViewModel, INavigableViewModel
     public ServiceSelectionViewModel(DataService dataService)
     {
         _dataService = dataService;
-        Departments = _dataService.LoadDepartments()
-            .Select(d => new DepartmentGroup(d))
-            .ToList();
+        try
+        {
+            Departments = _dataService.LoadDepartments()
+                .Select(d => new DepartmentGroup(d))
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            File.WriteAllText("crash_vm.log", ex.ToString());
+            throw;
+        }
         ProceedCommand = new Command(OnProceed, () => SelectedService is not null);
     }
 
-    private void OnProceed()
+    private async void OnProceed()
     {
-        // navigate to Calendar
+        try
+        {
+            var calendarPage = ServiceHelper.GetService<CalendarPage>();
+            if (calendarPage.BindingContext is CalendarViewModel vm)
+                vm.SelectedService = SelectedService!;
+
+            await Shell.Current.Navigation.PushAsync(calendarPage);
+        }
+        catch (Exception ex)
+        {
+            File.WriteAllText("crash_vm.log", ex.ToString());
+            throw;
+        }
     }
 }

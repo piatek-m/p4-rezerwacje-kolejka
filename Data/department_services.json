@@ -42,24 +42,5 @@
                 "SlotDurationMinutes": 10
             }
         ]
-    },
-    {
-        "Id": "dept_ewidencja",
-        "OfficeName": "Wydział Ewidencji Ludności",
-        "Name": "Dział Dowodów Osobistych",
-        "Services": [
-            {
-                "Id": "svc_dowod_wniosek",
-                "DepartmentId": "dept_ewidencja",
-                "Name": "Złożenie wniosku o dowód osobisty",
-                "SlotDurationMinutes": 10
-            },
-            {
-                "Id": "svc_dowod_odbior",
-                "DepartmentId": "dept_ewidencja",
-                "Name": "Odbiór dowodu osobistego",
-                "SlotDurationMinutes": 10
-            }
-        ]
     }
 ]

@@ -5,26 +5,34 @@ namespace OfficeReservations.Services;
 
 public class DataService
 {
-    private readonly string _dataPath;
+    public DataService() { }
 
-    public DataService(string dataPath)
+    public List<Reservation> LoadReservations()
     {
-        _dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
-    }
+        var path = Path.Combine(FileSystem.AppDataDirectory, "reservations.json");
 
-    public List<Reservation> LoadReservations() => throw new NotImplementedException();
+        if (!File.Exists(path))
+            return [];
+
+        var json = File.ReadAllText(path);
+        return JsonSerializer.Deserialize<List<Reservation>>(json) ?? [];
+    }
     public void SaveReservations(List<Reservation> reservations) => throw new NotImplementedException();
     public List<QueueEntry> LoadQueue(string departmentId) => throw new NotImplementedException();
     public void SaveQueue(string departmentId, List<QueueEntry> queue) => throw new NotImplementedException();
     public List<Department> LoadDepartments()
     {
-        var json = File.ReadAllText(Path.Combine(_dataPath, "services.json"));
+        using var stream = FileSystem.OpenAppPackageFileAsync("department_services.json").GetAwaiter().GetResult();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
         return JsonSerializer.Deserialize<List<Department>>(json) ?? [];
     }
     public WorkingHours LoadWorkingHours() => throw new NotImplementedException();
     public Dictionary<DayOfWeek, WorkingHours?> LoadSchedule()
     {
-        var json = File.ReadAllText(Path.Combine(_dataPath, "schedule.json"));
+        using var stream = FileSystem.OpenAppPackageFileAsync("schedule.json").GetAwaiter().GetResult();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
         var raw = JsonSerializer.Deserialize<Dictionary<string, WorkingHours?>>(json);
 
         if (raw is null)

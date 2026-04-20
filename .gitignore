@@ -63,3 +63,7 @@ nunit-*.xml
 .vscode/
 !.vscode/launch.json
 !.vscode/tasks.json
+
+# Logs
+run.log
+crash*.log

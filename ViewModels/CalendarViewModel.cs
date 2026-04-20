@@ -1,11 +1,15 @@
 using System.Windows.Input;
+using OfficeReservations.Helpers;
 using OfficeReservations.Services;
+using OfficeReservations.Models;
+using OfficeReservations.Views;
 
 namespace OfficeReservations.ViewModels;
 
 public class CalendarViewModel : BaseViewModel, INavigableViewModel
 {
     private readonly ReservationService _reservationService;
+    public Service? SelectedService { get; set; }
 
     private DateTime _selectedDate = DateTime.Today;
     public DateTime SelectedDate
@@ -27,6 +31,18 @@ public class CalendarViewModel : BaseViewModel, INavigableViewModel
             SetProperty(ref _availableSlots, value);
         }
     }
+    public bool NoSlotsAvailable => AvailableSlots.Count == 0;
+
+    private TimeOnly? _selectedSlot;
+    public TimeOnly? SelectedSlot
+    {
+        get => _selectedSlot;
+        set
+        {
+            SetProperty(ref _selectedSlot, value);
+            ((Command)ProceedCommand).ChangeCanExecute();
+        }
+    }
 
     public ICommand ProceedCommand { get; }
 
@@ -42,9 +58,22 @@ public class CalendarViewModel : BaseViewModel, INavigableViewModel
         AvailableSlots = _reservationService.GetAvailableSlots(_selectedDate);
     }
 
-    private void OnProceed()
+    private async void OnProceed()
     {
-        // go to next screen
+        var clientDataPage = ServiceHelper.GetService<ClientDataPage>();
+        if (clientDataPage.BindingContext is ClientDataViewModel vm)
+        {
+            vm.SelectedService = SelectedService;
+            vm.SelectedSlot = new DateTime(
+                _selectedDate.Year,
+                _selectedDate.Month,
+                _selectedDate.Day,
+                _selectedSlot!.Value.Hour,
+                _selectedSlot!.Value.Minute,
+                0);
+        }
+        await Shell.Current.Navigation.PushAsync(clientDataPage);
     }
+
 
 }
