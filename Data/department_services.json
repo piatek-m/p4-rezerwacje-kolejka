@@ -1,0 +1,65 @@
+[
+    {
+        "Id": "dept_rejestracja",
+        "OfficeName": "Wydział Transportu",
+        "Name": "Dział Rejestracji",
+        "Services": [
+            {
+                "Id": "svc_rejestracja_nowy",
+                "DepartmentId": "dept_rejestracja",
+                "Name": "Rejestracja nowego pojazdu",
+                "SlotDurationMinutes": 10
+            },
+            {
+                "Id": "svc_rejestracja_zmiana",
+                "DepartmentId": "dept_rejestracja",
+                "Name": "Zmiana właściciela pojazdu",
+                "SlotDurationMinutes": 10
+            },
+            {
+                "Id": "svc_rejestracja_dowod",
+                "DepartmentId": "dept_rejestracja",
+                "Name": "Odbiór dowodu rejestracyjnego",
+                "SlotDurationMinutes": 10
+            }
+        ]
+    },
+    {
+        "Id": "dept_prawajazdy",
+        "OfficeName": "Wydział Transportu",
+        "Name": "Dział Prawa Jazdy",
+        "Services": [
+            {
+                "Id": "svc_pj_wniosek",
+                "DepartmentId": "dept_prawajazdy",
+                "Name": "Złożenie wniosku o prawo jazdy",
+                "SlotDurationMinutes": 10
+            },
+            {
+                "Id": "svc_pj_odbior",
+                "DepartmentId": "dept_prawajazdy",
+                "Name": "Odbiór prawa jazdy",
+                "SlotDurationMinutes": 10
+            }
+        ]
+    },
+    {
+        "Id": "dept_ewidencja",
+        "OfficeName": "Wydział Ewidencji Ludności",
+        "Name": "Dział Dowodów Osobistych",
+        "Services": [
+            {
+                "Id": "svc_dowod_wniosek",
+                "DepartmentId": "dept_ewidencja",
+                "Name": "Złożenie wniosku o dowód osobisty",
+                "SlotDurationMinutes": 10
+            },
+            {
+                "Id": "svc_dowod_odbior",
+                "DepartmentId": "dept_ewidencja",
+                "Name": "Odbiór dowodu osobistego",
+                "SlotDurationMinutes": 10
+            }
+        ]
+    }
+]

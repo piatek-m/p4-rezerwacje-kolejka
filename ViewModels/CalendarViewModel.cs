@@ -3,7 +3,7 @@ using OfficeReservations.Services;
 
 namespace OfficeReservations.ViewModels;
 
-public class CalendarViewModel : BaseViewModel
+public class CalendarViewModel : BaseViewModel, INavigableViewModel
 {
     private readonly ReservationService _reservationService;
 
