@@ -11,7 +11,7 @@ public class ReservationService
         _dataService = dataService;
     }
 
-    public List<TimeOnly> GetAvailableSlots(DateTime day)
+    public List<TimeOnly> GetAvailableSlots(DateTime day, string departmentId)
     {
         if (day.Date < DateTime.Today)
             return [];
@@ -24,8 +24,16 @@ public class ReservationService
         var allSlots = GenerateSlots(hours.Open, hours.Close, day);
 
         var reservations = _dataService.LoadReservations();
+
+        File.WriteAllText("slots_debug.log",
+             $"DepartmentId szukany: '{departmentId}'\n" +
+             string.Join("\n", reservations.Select(r =>
+                 $"Rezerwacja: dept='{r.DepartmentId}' data={r.SlotDateTime} status={r.Status}")));
+
         var takenSlots = reservations
-            .Where(r => r.SlotDateTime.Date == day.Date && r.Status == ReservationStatus.Active)
+            .Where(r => r.SlotDateTime.Date == day.Date
+                     && r.Status == ReservationStatus.Active
+                     && r.DepartmentId == departmentId)
             .Select(r => TimeOnly.FromDateTime(r.SlotDateTime))
             .ToHashSet(); // Contains: O(1) instead of Linked List's O(n)
 
@@ -56,7 +64,28 @@ public class ReservationService
         return slots;
     }
 
-    public string CreateReservation(string serviceId, string departmentId, DateTime slot, ClientData client) => throw new NotImplementedException();
+    public string CreateReservation(string serviceId, string departmentId, DateTime slot, ClientData client)
+    {
+        var reservations = _dataService.LoadReservations();
+
+        var code = CodeGenerator.GenerateUniqueCode(reservations.Select(r => r.Code));
+
+        var reservation = new Reservation
+        {
+            Code = code,
+            ServiceId = serviceId,
+            DepartmentId = departmentId,
+            SlotDateTime = slot,
+            Status = ReservationStatus.Active,
+            Client = client,
+            CreatedAt = DateTime.Now
+        };
+
+        reservations.Add(reservation);
+        _dataService.SaveReservations(reservations);
+
+        return code;
+    }
     public bool CancelReservation(string code) => throw new NotImplementedException();
     public Reservation? GetReservation(string code) => throw new NotImplementedException();
     public ReservationStatus CheckExpiry(Reservation reservation) => throw new NotImplementedException();

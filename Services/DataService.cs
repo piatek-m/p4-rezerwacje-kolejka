@@ -7,17 +7,27 @@ public class DataService
 {
     public DataService() { }
 
+    private string ReservationsPath =>
+    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "reservations.json");
+
     public List<Reservation> LoadReservations()
     {
-        var path = Path.Combine(FileSystem.AppDataDirectory, "reservations.json");
+        File.WriteAllText("load_path.log", ReservationsPath);
 
-        if (!File.Exists(path))
+        if (!File.Exists(ReservationsPath))
             return [];
 
-        var json = File.ReadAllText(path);
+        var json = File.ReadAllText(ReservationsPath);
         return JsonSerializer.Deserialize<List<Reservation>>(json) ?? [];
     }
-    public void SaveReservations(List<Reservation> reservations) => throw new NotImplementedException();
+    public void SaveReservations(List<Reservation> reservations)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(ReservationsPath)!);
+
+        File.WriteAllText("save_path.log", ReservationsPath);
+        var json = JsonSerializer.Serialize(reservations);
+        File.WriteAllText(ReservationsPath, json);
+    }
     public List<QueueEntry> LoadQueue(string departmentId) => throw new NotImplementedException();
     public void SaveQueue(string departmentId, List<QueueEntry> queue) => throw new NotImplementedException();
     public List<Department> LoadDepartments()

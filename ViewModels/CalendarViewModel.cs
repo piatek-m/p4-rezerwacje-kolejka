@@ -9,7 +9,16 @@ namespace OfficeReservations.ViewModels;
 public class CalendarViewModel : BaseViewModel, INavigableViewModel
 {
     private readonly ReservationService _reservationService;
-    public Service? SelectedService { get; set; }
+    private Service? _selectedService;
+    public Service? SelectedService
+    {
+        get => _selectedService;
+        set
+        {
+            _selectedService = value;
+            LoadAvailableSlots();
+        }
+    }
 
     private DateTime _selectedDate = DateTime.Today;
     public DateTime SelectedDate
@@ -50,12 +59,14 @@ public class CalendarViewModel : BaseViewModel, INavigableViewModel
     {
         _reservationService = reservationService;
         ProceedCommand = new Command(OnProceed);
-        LoadAvailableSlots();
     }
 
     private void LoadAvailableSlots()
     {
-        AvailableSlots = _reservationService.GetAvailableSlots(_selectedDate);
+        AvailableSlots = _reservationService.GetAvailableSlots(
+            _selectedDate,
+            SelectedService?.DepartmentId ?? string.Empty
+        );
     }
 
     private async void OnProceed()

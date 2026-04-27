@@ -7,18 +7,21 @@
             {
                 "Id": "svc_rejestracja_nowy",
                 "DepartmentId": "dept_rejestracja",
+                "DepartmentName": "Dział Rejestracji",
                 "Name": "Rejestracja nowego pojazdu",
                 "SlotDurationMinutes": 10
             },
             {
                 "Id": "svc_rejestracja_zmiana",
                 "DepartmentId": "dept_rejestracja",
+                "DepartmentName": "Dział Rejestracji",
                 "Name": "Zmiana właściciela pojazdu",
                 "SlotDurationMinutes": 10
             },
             {
                 "Id": "svc_rejestracja_dowod",
                 "DepartmentId": "dept_rejestracja",
+                "DepartmentName": "Dział Rejestracji",
                 "Name": "Odbiór dowodu rejestracyjnego",
                 "SlotDurationMinutes": 10
             }
@@ -32,12 +35,14 @@
             {
                 "Id": "svc_pj_wniosek",
                 "DepartmentId": "dept_prawajazdy",
+                "DepartmentName": "Dział Prawa Jazdy",
                 "Name": "Złożenie wniosku o prawo jazdy",
                 "SlotDurationMinutes": 10
             },
             {
                 "Id": "svc_pj_odbior",
                 "DepartmentId": "dept_prawajazdy",
+                "DepartmentName": "Dział Prawa Jazdy",
                 "Name": "Odbiór prawa jazdy",
                 "SlotDurationMinutes": 10
             }
