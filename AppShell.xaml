@@ -6,9 +6,8 @@
     xmlns:views="clr-namespace:OfficeReservations.Views"
     Title="OfficeReservations">
 
-    <ShellContent
-        Title="Rezerwacja"
-        ContentTemplate="{DataTemplate views:ServiceSelectionPage}"
-        Route="ServiceSelectionPage"/>
+    <ShellContent Title="Główna"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage"/>
 
 </Shell>

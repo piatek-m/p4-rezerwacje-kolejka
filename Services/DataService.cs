@@ -7,8 +7,10 @@ public class DataService
 {
     public DataService() { }
 
+    private string QueuePath(string departmentId) =>
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", $"queue_{departmentId}.json");
     private string ReservationsPath =>
-    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "reservations.json");
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "reservations.json");
 
     public List<Reservation> LoadReservations()
     {
@@ -28,8 +30,23 @@ public class DataService
         var json = JsonSerializer.Serialize(reservations);
         File.WriteAllText(ReservationsPath, json);
     }
-    public List<QueueEntry> LoadQueue(string departmentId) => throw new NotImplementedException();
-    public void SaveQueue(string departmentId, List<QueueEntry> queue) => throw new NotImplementedException();
+
+    public List<QueueEntry> LoadQueue(string departmentId)
+    {
+        var path = QueuePath(departmentId);
+        if (!File.Exists(path))
+            return [];
+        var json = File.ReadAllText(path);
+        return JsonSerializer.Deserialize<List<QueueEntry>>(json) ?? [];
+    }
+
+    public void SaveQueue(string departmentId, List<QueueEntry> queue)
+    {
+        var path = QueuePath(departmentId);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        var json = JsonSerializer.Serialize(queue);
+        File.WriteAllText(path, json);
+    }
     public List<Department> LoadDepartments()
     {
         using var stream = FileSystem.OpenAppPackageFileAsync("department_services.json").GetAwaiter().GetResult();

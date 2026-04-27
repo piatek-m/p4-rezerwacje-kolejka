@@ -27,6 +27,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<QueueService>();
 
 		// ViewModels
+		builder.Services.AddTransient<MainPage>();
 		builder.Services.AddTransient<ServiceSelectionViewModel>();
 		builder.Services.AddTransient<CalendarViewModel>();
 		builder.Services.AddTransient<ClientDataViewModel>();

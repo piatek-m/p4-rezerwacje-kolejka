@@ -3,4 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OfficeReservations.Views.QueueJoinPage"
              Title="Dołącz do kolejki">
+
+    <VerticalStackLayout Padding="20"
+                         Spacing="16">
+
+        <Label Text="Dołącz do kolejki"
+               FontSize="24"
+               FontAttributes="Bold"/>
+
+        <Label Text="Wpisz kod swojej rezerwacji"
+               FontSize="14"
+               TextColor="Gray"/>
+
+        <Entry Placeholder="np. AB1C2"
+               Text="{Binding Code}"
+               MaxLength="5"
+               FontSize="20"
+               HorizontalTextAlignment="Center"
+               CharacterSpacing="8"/>
+
+        <Button Text="Dołącz do kolejki"
+                Command="{Binding JoinCommand}"
+                HorizontalOptions="Fill"/>
+
+        <Border IsVisible="{Binding HasMessage}"
+                Padding="16"
+                Stroke="{Binding MessageColor}"
+                StrokeThickness="2">
+            <Label Text="{Binding Message}"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"/>
+        </Border>
+
+    </VerticalStackLayout>
 </ContentPage>

@@ -87,6 +87,20 @@ public class ReservationService
         return code;
     }
     public bool CancelReservation(string code) => throw new NotImplementedException();
-    public Reservation? GetReservation(string code) => throw new NotImplementedException();
-    public ReservationStatus CheckExpiry(Reservation reservation) => throw new NotImplementedException();
+    public Reservation? GetReservation(string code)
+    {
+        return _dataService.LoadReservations()
+            .FirstOrDefault(r => r.Code == code);
+    }
+
+    public void ExpireReservation(string code)
+    {
+        var reservations = _dataService.LoadReservations();
+        var reservation = reservations.FirstOrDefault(r => r.Code == code);
+        if (reservation is not null)
+        {
+            reservation.Status = ReservationStatus.Expired;
+            _dataService.SaveReservations(reservations);
+        }
+    }
 }

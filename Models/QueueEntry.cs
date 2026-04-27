@@ -7,4 +7,15 @@ public class QueueEntry
     public bool HasReservation { get; set; }
     public DateTime JoinedAt { get; set; }
     public QueueEntryStatus Status { get; set; }
+
+    public QueueEntry() { }
+
+    public QueueEntry(string code, string departmentId, bool hasReservation)
+    {
+        Code = code;
+        DepartmentId = departmentId;
+        HasReservation = hasReservation;
+        JoinedAt = DateTime.Now;
+        Status = QueueEntryStatus.Waiting;
+    }
 }

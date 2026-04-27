@@ -63,10 +63,12 @@ public class CalendarViewModel : BaseViewModel, INavigableViewModel
 
     private void LoadAvailableSlots()
     {
+        if (SelectedService is null) return;
         AvailableSlots = _reservationService.GetAvailableSlots(
             _selectedDate,
             SelectedService?.DepartmentId ?? string.Empty
         );
+        OnPropertyChanged(nameof(NoSlotsAvailable));
     }
 
     private async void OnProceed()
